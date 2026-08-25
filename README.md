@@ -32,4 +32,4 @@ Do not put the Supabase service-role key in browser/client code.
 
 
 ## The screnshot of the site
-![Dashboard of the lms site]("images/UMAT-101-COURSE.png")
+![Dashboard of the lms site]("./images/UMAT-101-COURSE.png")
