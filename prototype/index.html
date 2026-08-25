@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UMAT-101 · Differential Calculus</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+    :root{
+      --bg:#0e171d;--surface:#152029;--surface2:#1b2831;--surface3:#22303a;
+      --border:#2a3a44;--borderStrong:#3a4d58;--text:#e7ecec;--dim:#9fb2b8;
+      --faint:#6c818a;--amber:#e8a33d;--amberDim:#3a2c16;--green:#5fae7c;
+      --greenDim:#1b2e22;--red:#d9756b;--redDim:#332020;--blue:#6fa3c4;
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+    button,input,textarea,select{font:inherit} button{cursor:pointer}
+    .app{min-height:100vh;display:flex}.sidebar{width:245px;background:#101a21;border-right:1px solid var(--border);padding:20px 14px;position:fixed;inset:0 auto 0 0}
+    .brand{padding:8px 10px 20px;border-bottom:1px solid var(--border);margin-bottom:16px}
+    .brand .code{font:500 13px "IBM Plex Mono";color:var(--amber);letter-spacing:.08em}.brand h1{font:600 20px Fraunces;margin:6px 0 3px}.brand p{font-size:11px;color:var(--dim);line-height:1.5;margin:0}
+    .nav button{width:100%;border:0;background:transparent;color:var(--dim);text-align:left;padding:11px 12px;border-radius:7px;margin:2px 0;font-size:13px}
+    .nav button:hover,.nav button.active{background:var(--surface2);color:var(--text)} .nav button.active{box-shadow:inset 3px 0 0 var(--amber)}
+    .role{margin-top:18px;border-top:1px solid var(--border);padding:16px 10px 0}.role label{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.12em}
+    .role select{width:100%;margin-top:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px;border-radius:6px}
+    main{margin-left:245px;flex:1}.topbar{height:62px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;background:rgba(14,23,29,.94);backdrop-filter:blur(10px);z-index:5}
+    .crumb{font:500 12px "IBM Plex Mono";color:var(--dim)}.user{font-size:12px;color:var(--dim)}.user b{color:var(--text)}
+    .content{max-width:1180px;margin:0 auto;padding:30px}.page-title{font:600 30px Fraunces;margin:0 0 5px}.subtitle{color:var(--dim);font-size:13px;margin-bottom:24px}
+    .grid{display:grid;gap:14px}.grid4{grid-template-columns:repeat(4,1fr)}.grid2{grid-template-columns:repeat(2,1fr)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:18px}.eyebrow{font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.12em}.big{font:600 26px Fraunces;margin-top:5px}.muted{color:var(--dim)}.mono{font:12px "IBM Plex Mono";color:var(--dim)}
+    .progress{height:8px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-top:10px}.progress i{display:block;height:100%;background:var(--amber)}
+    .section-title{font:600 18px Fraunces;margin:28px 0 12px}.row{display:flex;align-items:center;justify-content:space-between;gap:15px}.stack>*+*{margin-top:10px}
+    .pill{display:inline-block;border-radius:999px;padding:5px 9px;font-size:11px;border:1px solid var(--border);color:var(--dim)}.pill.green{color:var(--green);background:var(--greenDim);border-color:#31553e}.pill.amber{color:var(--amber);background:var(--amberDim);border-color:#5a4520}.pill.red{color:var(--red);background:var(--redDim);border-color:#5a302c}
+    .btn{border:1px solid var(--borderStrong);background:var(--surface2);color:var(--text);padding:9px 13px;border-radius:6px;font-size:12px}.btn:hover{border-color:var(--amber);color:var(--amber)}.btn.primary{background:var(--amberDim);border-color:#735523;color:var(--amber)}
+    .btn.danger{color:var(--red)}.tabs{display:flex;gap:8px;margin-bottom:14px}.tabs button{border:1px solid var(--border);background:transparent;color:var(--dim);padding:7px 12px;border-radius:999px}.tabs button.active{color:var(--amber);background:var(--amberDim);border-color:#735523}
+    .module{margin-bottom:12px}.module-head{padding:17px;cursor:pointer}.module-head:hover{background:var(--surface2)}.module-body{border-top:1px solid var(--border);padding:12px 17px}.topic{padding:12px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}.topic:last-child{border-bottom:0}
+    .notice{border-left:3px solid var(--amber);background:var(--surface2);padding:13px 15px;border-radius:5px}.notice + .notice{margin-top:10px}.notice strong{font-size:13px}.notice p{margin:5px 0 0;color:var(--dim);font-size:12px;line-height:1.55}
+    table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--border)}th{color:var(--faint);font-size:10px;text-transform:uppercase;letter-spacing:.08em}td{color:var(--dim)}td strong{color:var(--text)}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:20;padding:20px}.modal.open{display:flex}.modal-box{width:min(620px,100%);background:var(--surface);border:1px solid var(--borderStrong);border-radius:10px;padding:22px}.modal-box h2{font:600 22px Fraunces;margin:0 0 15px}.field{margin:12px 0}.field label{display:block;font-size:11px;color:var(--dim);margin-bottom:6px}.field input,.field textarea,.field select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:9px}.field textarea{min-height:90px;resize:vertical}.actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+    .empty{padding:30px;text-align:center;color:var(--faint)}.staff-only{display:none}
+    @media(max-width:900px){.sidebar{width:205px}main{margin-left:205px}.grid4{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+    @media(max-width:650px){.sidebar{position:static;width:100%;height:auto}.app{display:block}main{margin-left:0}.topbar{position:static}.content{padding:20px}.grid4{grid-template-columns:1fr 1fr}.nav{display:grid;grid-template-columns:1fr 1fr}.role{display:none}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="code">UMAT-101</div>
+      <h1>Differential Calculus</h1>
+      <p>S. Balasubramanian · Instructor<br>Abhishek Sharma · CH Ramanjaneyulu · TAs</p>
+    </div>
+    <div class="nav" id="nav"></div>
+    <div class="role">
+      <label>Preview role</label>
+      <select id="roleSelect">
+        <option value="student">Student</option>
+        <option value="staff">Instructor / TA</option>
+      </select>
+    </div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="crumb">UMAT-101 / <span id="crumb">Dashboard</span></div><div class="user"><b id="roleName">Student</b> · Fall 2026</div></header>
+    <section class="content" id="content"></section>
+  </main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<script>
+const modules=[
+ {id:1,title:"Functions",book:"Thomas' Calculus 12e · §§1.1–1.4",topics:["1.1 Functions and Their Graphs","1.2 Combining Functions; Shifting and Scaling Graphs","1.3 Trigonometric Functions","1.4 Graphing with Calculators and Computers"]},
+ {id:2,title:"Limits and Continuity",book:"Thomas' Calculus 12e · §§2.1–2.6",topics:["2.1 Rates of Change and Tangents to Curves","2.2 Limit of a Function and Limit Laws","2.3 The Precise Definition of a Limit","2.4 One-Sided Limits","2.5 Continuity","2.6 Limits Involving Infinity; Asymptotes"]},
+ {id:3,title:"Differentiation",book:"Thomas' Calculus 12e · §§3.1–3.9",topics:["3.1 Tangents and the Derivative at a Point","3.2 The Derivative as a Function","3.3 Differentiation Rules","3.4 The Derivative as a Rate of Change","3.5 Derivatives of Trigonometric Functions","3.6 The Chain Rule","3.7 Implicit Differentiation","3.8 Related Rates","3.9 Linearization and Differentials"]},
+ {id:4,title:"Applications of Derivatives",book:"Thomas' Calculus 12e · §§4.1–4.7",topics:["4.1 Extreme Values of Functions","4.2 The Mean Value Theorem","4.3 Monotonic Functions and the First Derivative Test","4.4 Concavity and Curve Sketching","4.5 Applied Optimization","4.6 Newton's Method","4.7 Antiderivatives (optional / to be confirmed)"]},
+ {id:5,title:"Additional Differential Calculus Topics",book:"Selected material · initially unpublished",topics:["Inverse functions and derivatives","Natural logarithms","Exponential functions","L'Hôpital's Rule","Inverse trigonometric functions"]}
+];
+const lectures=[
+ {id:1,module:1,section:"§1.1",title:"Functions and Their Graphs",file:"Lecture 01.pdf"},
+ {id:2,module:2,section:"§2.1",title:"Rates of Change and Tangents",file:"Lecture 02.pdf"},
+ {id:3,module:2,section:"§2.2",title:"Limits and Limit Laws",file:"Lecture 03.pdf"},
+ {id:4,module:3,section:"§3.1",title:"The Derivative at a Point",file:"Lecture 04.pdf"},
+ {id:5,module:3,section:"§3.3",title:"Differentiation Rules",file:"Lecture 05.pdf"},
+ {id:6,module:3,section:"§3.6",title:"The Chain Rule",file:"Lecture 06.pdf"}
+];
+let assignments=[
+ {id:1,module:2,title:"Assignment 01 — Limits",due:"30 Aug 2026 · 11:59 PM",marks:10,status:"upcoming",submitted:false,grade:null},
+ {id:2,module:3,title:"Assignment 02 — Differentiation",due:"05 Sep 2026 · 11:59 PM",marks:10,status:"upcoming",submitted:false,grade:null},
+ {id:3,module:3,title:"Assignment 03 — Chain Rule & Implicit Differentiation",due:"12 Sep 2026 · 11:59 PM",marks:15,status:"upcoming",submitted:false,grade:null}
+];
+const announcements=[
+ {title:"Welcome to UMAT-101",who:"S. Balasubramanian",when:"25 Aug 2026",text:"Course materials and assignments will be published here. Please use the LMS as the main course hub."},
+ {title:"Teaching team",who:"Course staff",when:"25 Aug 2026",text:"Instructor: S. Balasubramanian. TAs: Abhishek Sharma and CH Ramanjaneyulu."}
+];
+let view="dashboard", role="student", expanded={1:true,2:true,3:false,4:false,5:false};
+
+const navStudent=[["dashboard","⌂","Dashboard"],["modules","▦","Modules"],["assignments","✎","Assignments"],["quizzes","◷","Quizzes"],["resources","▤","Resources"],["announcements","!","Announcements"],["grades","▥","Gradebook"]];
+const navStaff=[["staff","⌂","Staff Dashboard"],["students","♙","Students"],["modules","▦","Modules"],["lectures","▤","Lectures"],["assignments","✎","Assignments"],["submissions","✓","Submissions"],["quizzes","◷","Quizzes"],["grades","▥","Gradebook"],["resources","▤","Resources"],["announcements","!","Announcements"]];
+
+function renderNav(){
+ const arr=role==="student"?navStudent:navStaff;
+ document.getElementById("nav").innerHTML=arr.map(([id,icon,label])=>`<button class="${view===id?'active':''}" onclick="go('${id}')">${icon}&nbsp;&nbsp;${label}</button>`).join("");
+ document.getElementById("roleName").textContent=role==="student"?"Student":"Instructor / TA";
+}
+function go(v){view=v;renderNav();render();}
+function card(html,cls=""){return `<div class="card ${cls}">${html}</div>`}
+function status(s){let c=s==="submitted"?"green":s==="past-due"?"red":"amber";return `<span class="pill ${c}">${s==="submitted"?"Submitted":s==="past-due"?"Past due":"Upcoming"}</span>`}
+
+function dashboard(){
+ if(role==="staff") return staffDashboard();
+ return `<h1 class="page-title">Good evening</h1><div class="subtitle">UMAT-101 · Differential Calculus</div>
+ <div class="grid grid4">
+ ${card(`<div class="eyebrow">Course progress</div><div class="big">28%</div><div class="progress"><i style="width:28%"></i></div>`)}
+ ${card(`<div class="eyebrow">Next lecture</div><div class="big" style="font-size:20px">The Chain Rule</div><div class="mono">Thomas' Calculus §3.6</div>`)}
+ ${card(`<div class="eyebrow">Next deadline</div><div class="big" style="font-size:20px">Assignment 01</div><div class="mono">30 Aug · 11:59 PM</div>`)}
+ ${card(`<div class="eyebrow">Current grade</div><div class="big">—</div><div class="mono">No graded work yet</div>`)}
+ </div>
+ <div class="section-title">Latest announcements</div>
+ ${announcements.map(a=>`<div class="notice"><strong>${a.title}</strong><span class="mono"> · ${a.who} · ${a.when}</span><p>${a.text}</p></div>`).join("")}
+ <div class="section-title">Continue learning</div>
+ ${card(`<div class="row"><div><div><strong>Module 3 — Differentiation</strong></div><div class="mono">Thomas' Calculus §§3.1–3.9</div></div><button class="btn primary" onclick="go('modules')">Open module →</button></div>`)}
+ `;
+}
+function staffDashboard(){
+ const pending=assignments.filter(a=>!a.submitted).length;
+ return `<h1 class="page-title">Staff Dashboard</h1><div class="subtitle">UMAT-101 · Instructor and TA workspace</div>
+ <div class="grid grid4">
+ ${card(`<div class="eyebrow">Students</div><div class="big">—</div><div class="mono">Connect database to populate</div>`)}
+ ${card(`<div class="eyebrow">Assignments</div><div class="big">${assignments.length}</div><div class="mono">currently configured</div>`)}
+ ${card(`<div class="eyebrow">To grade</div><div class="big">0</div><div class="mono">live submissions pending</div>`)}
+ ${card(`<div class="eyebrow">Modules</div><div class="big">4</div><div class="mono">+ 1 unpublished</div>`)}
+ </div>
+ <div class="section-title">Quick actions</div>
+ <div class="grid grid2">
+ ${card(`<div class="row"><div><strong>Upload a lecture PDF</strong><div class="mono">Publish to a module and textbook section.</div></div><button class="btn primary" onclick="openLectureModal()">+ Upload Lecture</button></div>`)}
+ ${card(`<div class="row"><div><strong>Create an assignment</strong><div class="mono">Set due date, marks and instructions.</div></div><button class="btn primary" onclick="openAssignmentModal()">+ Create Assignment</button></div>`)}
+ </div>
+ <div class="section-title">Recent announcements</div>${announcements.map(a=>`<div class="notice"><strong>${a.title}</strong><span class="mono"> · ${a.when}</span><p>${a.text}</p></div>`).join("")}`;
+}
+function modulesPage(){
+ return `<h1 class="page-title">Modules</h1><div class="subtitle">Provisional UMAT-101 structure based on Thomas' Calculus, 12th Edition. Edit once the official syllabus is confirmed.</div>
+ ${modules.map(m=>`<div class="card module" style="${m.id===5?'opacity:.62':''}">
+ <div class="module-head row" onclick="expanded[${m.id}]=!expanded[${m.id}];render()"><div><strong>Module ${m.id} — ${m.title}</strong><div class="mono">${m.book}</div></div><span>${expanded[m.id]?'−':'+'}</span></div>
+ ${expanded[m.id]?`<div class="module-body">${m.topics.map((t,i)=>`<div class="topic"><div><strong>${t}</strong><div class="mono">${m.id<=4?"Lecture / practice material":"Not yet published"}</div></div>${m.id<=4?'<span class="pill green">Planned</span>':'<span class="pill">Unpublished</span>'}</div>`).join("")}</div>`:""}</div>`).join("")}`;
+}
+function assignmentsPage(){
+ return `<h1 class="page-title">Assignments</h1><div class="subtitle">Submit your solution as a PDF. This version stores the interaction locally in your browser.</div>
+ <div class="tabs"><button class="active">All</button></div>
+ ${assignments.map(a=>card(`<div class="row"><div><strong>${a.title}</strong><div class="mono">Due ${a.due} · ${a.marks} marks · Module ${a.module}</div></div>${a.submitted?status("submitted"):'<span class="pill amber">Upcoming</span>'}</div>
+ <div style="margin-top:12px;color:var(--dim);font-size:12px">Instructions: Solve the assigned problems from the corresponding Thomas' Calculus section and submit a clear PDF.</div>
+ <div style="margin-top:14px;display:flex;gap:8px">${a.submitted?`<button class="btn" onclick="openSubmission(${a.id})">View submission</button>`:`<button class="btn primary" onclick="openSubmission(${a.id})">Upload PDF / Submit</button>`}</div>`)).join("")}`;
+}
+function quizzesPage(){
+ return `<h1 class="page-title">Quizzes</h1><div class="subtitle">Quiz engine placeholder for the first working version.</div>
+ ${card(`<div class="row"><div><strong>Quiz 01 — Limits</strong><div class="mono">Module 2 · 10 questions · 20 minutes</div></div><span class="pill amber">Coming soon</span></div>`)}
+ ${card(`<div class="row"><div><strong>Quiz 02 — Differentiation Rules</strong><div class="mono">Module 3 · 10 questions · 20 minutes</div></div><span class="pill">Not published</span></div>`)}
+ <div class="section-title">Planned quiz features</div>${card(`<div class="stack"><div>✓ Timed attempts</div><div>✓ Automatic scoring for objective questions</div><div>✓ Attempt limits</div><div>✓ Results and gradebook integration</div></div>`)}`;
+}
+function resourcesPage(){
+ return `<h1 class="page-title">Resources</h1><div class="subtitle">Course files will be uploaded here once the backend is connected.</div>
+ ${card(`<div class="stack">
+ <div class="row"><strong>📖 Thomas' Calculus, 12th Edition</strong><span class="pill">Reference</span></div>
+ <div class="row"><strong>📄 Course syllabus</strong><span class="pill">To be uploaded</span></div>
+ <div class="row"><strong>📄 Lecture PDFs</strong><span class="pill">Upload via staff area</span></div>
+ <div class="row"><strong>📄 Assignment PDFs</strong><span class="pill">Upload via staff area</span></div>
+ </div>`)}`;
+}
+function announcementsPage(){
+ return `<h1 class="page-title">Announcements</h1><div class="subtitle">Course-wide notices from the teaching team.</div>
+ ${role==="staff"?`<button class="btn primary" onclick="openAnnouncementModal()">+ New Announcement</button>`:""}
+ <div style="margin-top:14px">${announcements.map(a=>`<div class="notice"><strong>${a.title}</strong><span class="mono"> · ${a.who} · ${a.when}</span><p>${a.text}</p></div>`).join("")}</div>`;
+}
+function gradesPage(){
+ return `<h1 class="page-title">Gradebook</h1><div class="subtitle">${role==="student"?"Your marks will appear here as work is graded.":"Course gradebook — connect Supabase for real student records."}</div>
+ ${role==="student"?card(`<table><thead><tr><th>Component</th><th>Marks</th><th>Status</th></tr></thead><tbody>${assignments.map(a=>`<tr><td><strong>${a.title}</strong></td><td>${a.grade==null?"—":a.grade+"/"+a.marks}</td><td>${a.submitted?"Submitted":"Not submitted"}</td></tr>`).join("")}</tbody></table>`):card(`<table><thead><tr><th>Student</th><th>Assignment 01</th><th>Assignment 02</th><th>Assignment 03</th><th>Total</th></tr></thead><tbody><tr><td><strong>Sample student</strong></td><td>—</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>`)}`;
+}
+function staffSimple(v){
+ if(v==="students") return `<h1 class="page-title">Students</h1><div class="subtitle">Student records will be loaded from the LMS database.</div>${card(`<div class="empty">No live student database is connected yet.<br><br>Next build step: Supabase authentication + course membership.</div>`)}`;
+ if(v==="lectures") return `<h1 class="page-title">Lectures</h1><div class="subtitle">Manage lecture PDFs and textbook section mappings.</div><button class="btn primary" onclick="openLectureModal()">+ Upload Lecture</button><div class="section-title">Current lecture plan</div>${lectures.map(l=>card(`<div class="row"><div><strong>${l.title}</strong><div class="mono">Module ${l.module} · ${l.section} · ${l.file}</div></div><span class="pill green">Planned</span></div>`)).join("")}`;
+ if(v==="submissions") return `<h1 class="page-title">Submissions</h1><div class="subtitle">Student PDF submissions will appear here once storage is connected.</div>${card(`<div class="empty">No live submissions yet.<br><br>Next build step: file storage + submissions table.</div>`)}`;
+ return null;
+}
+function render(){
+ document.getElementById("crumb").textContent=(role==="staff"&&view==="staff"?"Staff Dashboard":view.charAt(0).toUpperCase()+view.slice(1));
+ let html;
+ if(view==="dashboard"||view==="staff") html=dashboard();
+ else if(view==="modules") html=modulesPage();
+ else if(view==="assignments") html=assignmentsPage();
+ else if(view==="quizzes") html=quizzesPage();
+ else if(view==="resources") html=resourcesPage();
+ else if(view==="announcements") html=announcementsPage();
+ else if(view==="grades") html=gradesPage();
+ else html=staffSimple(view)||dashboard();
+ document.getElementById("content").innerHTML=html;
+}
+function openModal(html){document.getElementById("modalBox").innerHTML=html;document.getElementById("modal").classList.add("open")}
+function closeModal(){document.getElementById("modal").classList.remove("open")}
+function openSubmission(id){
+ const a=assignments.find(x=>x.id===id);
+ openModal(`<h2>${a.title}</h2><div class="mono">Due ${a.due} · ${a.marks} marks</div>
+ <div class="field"><label>Solution PDF</label><input id="submissionFile" type="file" accept=".pdf"></div>
+ <div class="field"><label>Optional comment</label><textarea id="submissionNote" placeholder="Add a note for the instructor/TA"></textarea></div>
+ <div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="submitAssignment(${id})">Submit</button></div>`);
+}
+function submitAssignment(id){
+ const f=document.getElementById("submissionFile").files[0];
+ if(!f){alert("Please choose a PDF.");return}
+ if(!f.name.toLowerCase().endsWith(".pdf")){alert("Please select a PDF file.");return}
+ const a=assignments.find(x=>x.id===id);a.submitted=true;a.submittedFile=f.name;a.submittedAt=new Date().toLocaleString();
+ closeModal();render();
+ alert("Submission recorded in this browser prototype. A real LMS will store it securely in Supabase.");
+}
+function openLectureModal(){
+ openModal(`<h2>Upload Lecture PDF</h2><div class="field"><label>Module</label><select>${modules.filter(m=>m.id<=4).map(m=>`<option>Module ${m.id} — ${m.title}</option>`).join("")}</select></div>
+ <div class="field"><label>Textbook section</label><input placeholder="e.g. §3.6"></div><div class="field"><label>Lecture title</label><input placeholder="e.g. Chain Rule"></div>
+ <div class="field"><label>PDF</label><input type="file" accept=".pdf"></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="fakeUpload('Lecture')">Upload</button></div>`);
+}
+function openAssignmentModal(){
+ openModal(`<h2>Create Assignment</h2><div class="field"><label>Title</label><input id="newTitle" placeholder="Assignment 04 — Applications"></div>
+ <div class="field"><label>Module</label><select>${modules.filter(m=>m.id<=4).map(m=>`<option value="${m.id}">Module ${m.id} — ${m.title}</option>`).join("")}</select></div>
+ <div class="field"><label>Due date</label><input type="datetime-local"></div><div class="field"><label>Maximum marks</label><input type="number" value="10"></div>
+ <div class="field"><label>Instructions PDF</label><input type="file" accept=".pdf"></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="fakeUpload('Assignment')">Publish</button></div>`);
+}
+function openAnnouncementModal(){
+ openModal(`<h2>New Announcement</h2><div class="field"><label>Title</label><input placeholder="Announcement title"></div><div class="field"><label>Message</label><textarea placeholder="Write the announcement..."></textarea></div><div class="actions"><button class="btn" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="fakeUpload('Announcement')">Publish</button></div>`);
+}
+function fakeUpload(type){closeModal();alert(type+" saved in the UI prototype. Backend persistence is the next build step.");}
+document.getElementById("roleSelect").addEventListener("change",e=>{role=e.target.value;view=role==="staff"?"staff":"dashboard";renderNav();render()});
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+renderNav();render();
+</script>
+</body>
+</html>

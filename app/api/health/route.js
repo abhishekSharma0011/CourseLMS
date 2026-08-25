@@ -1,0 +1,1 @@
+export async function GET(){return Response.json({ok:true,service:"UMAT-101 LMS",version:"0.2.0"});}
