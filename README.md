@@ -1,6 +1,5 @@
 # UMAT-101 LMS v2 — real backend scaffold
 
-This is the next step after the static v1 prototype.
 
 ## Stack
 - Next.js
