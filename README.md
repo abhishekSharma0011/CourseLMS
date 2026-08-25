@@ -30,3 +30,7 @@ Authentication + database-backed dashboard/module loading are wired.
 PDF storage, assignment submission, grading UI and full staff CRUD are the next implementation layer.
 
 Do not put the Supabase service-role key in browser/client code.
+
+
+## The screnshot of the site
+![Dashboard of the lms site]("/home/abhishek/Desktop/UMAT-101/2/umat101-lms-v2/images/UMAT-101-COURSE.png")
